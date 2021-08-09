@@ -1,0 +1,24 @@
+<html lang="en-US">
+<head>
+    <title>SI PoC data generator</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="./js/app.js"></script>
+</head>
+
+<body onload="disconnect()">
+
+<div>
+    <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <br/>
+    <div id="conversationDiv">
+        <pre id="response"></pre>
+    </div>
+</div>
+
+</body>
+</html>
