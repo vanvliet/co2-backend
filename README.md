@@ -4,19 +4,13 @@
 ```bash
 mvn spring-boot:run
 ```
-
-<http://localhost:8080/api/v1>
-
-Connect will display, when a SenML message is sent to the SenML end point:
+or to start the docker
 ```json
-{
-  "timeStamp": 1619962716000,
-  "name": "Kamer-1-23",
-  "condition": {
-    "co2": 645
-  }
-}
+docker run -d -p 8080:8080 --name co2-backend rimvanvliet/co2-backend
 ```
+
+## Access the API
+
 The API is exposed as swagger-ui on <http://localhost:8080/api/v1/swagger-ui.html>
 
 Example SenML message that can be POSTed
@@ -33,3 +27,15 @@ Example SenML message that can be POSTed
 ```
 
 If `bt` (base time) is not passed, the current time is assumed. 
+
+## Show the results
+Connect with <http://localhost:8080/api/v1>, when a SenML message is sent to the SenML end point, the message is shown:
+```json
+{
+  "timeStamp": 1619962716000,
+  "name": "Kamer-1-23",
+  "condition": {
+    "co2": 645
+  }
+}
+```
