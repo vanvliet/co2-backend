@@ -1,8 +1,10 @@
 package nl.trivento.co2backend.controllers
 
+import nl.trivento.co2backend.domain.Room
 import nl.trivento.co2backend.generator.Rooms
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 
 @RestController
@@ -35,12 +37,11 @@ class RoomController {
         }
     }
 
-//    @PostMapping("")
-//    fun createNewRoom(@Valid @RequestBody roomDtoIn: Room.RoomDtoIn): ResponseEntity<Any> {
-//        if (route != null && profile != null)
-//            return ResponseEntity.ok().body(Rooms.rooms.add(roomDtoIn.toRoom(route, profile, roomDtoIn.sensors)))
-//        else
-//            return ResponseEntity.notFound().build()
-//    }
-
+    @PostMapping("")
+    fun createNewRoom(@Valid @RequestBody room: Room): ResponseEntity<Any> {
+        if ( Rooms.rooms.find {it.name == room.name  } == null)
+            return ResponseEntity.ok().body(Rooms.rooms.add(room))
+        else
+            return ResponseEntity.badRequest().body("Room ${room.name} already exists.")
+    }
 }
