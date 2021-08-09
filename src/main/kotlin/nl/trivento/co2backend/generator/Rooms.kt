@@ -7,7 +7,7 @@ object Rooms {
 
     val rooms = mutableSetOf(
         Room(
-            name = "Kamer-1-23",
+            name = "Kamer-1.23",
             condition = Condition(),
             sensors = arrayListOf("00:11:22:33:44:55")
         )
