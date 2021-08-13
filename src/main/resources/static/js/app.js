@@ -1,12 +1,6 @@
 let stompClient = null;
 
-function setConnected(connected) {
-
-    document.getElementById('connect').disabled = connected;
-    document.getElementById('disconnect').disabled = !connected;
-    document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
-    document.getElementById('response').innerHTML = '';
-}
+let roomsList = null;
 
 function connect() {
 
@@ -14,30 +8,28 @@ function connect() {
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function (frame) {
-
-        setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/room-message', function (messageOutput) {
-
-            showMessageOutput(JSON.parse(messageOutput.body));
+            upsertRoom(JSON.parse(messageOutput.body));
         });
     });
 }
 
-function disconnect() {
-
-    if (stompClient != null) {
-        stompClient.disconnect();
-    }
-
-    setConnected(false);
-    console.log("Disconnected");
+function upsertRoom(room) {
+    const li = document.getElementById(room.name) ? document.getElementById(room.name) : createLiItem(room.name)
+    li.innerHTML = room.name + ", CO2: " + room.condition.co2;
 }
 
-function showMessageOutput(messageOutput) {
+function createLiItem(id) {
+    const roomsListUl = document.getElementById('roomsList');
+    li = document.createElement('li')
+    li.setAttribute("id", id);
+    roomsListUl.appendChild(li);
+    return li;
+}
 
-    const response = document.getElementById('response');
-    const p = document.createElement('pre');
-    p.innerHTML = JSON.stringify(messageOutput, undefined, 2);
-    response.appendChild(p);
+const fetchRooms = async () => {
+    const response = await fetch('http://localhost:8080/api/v1/rooms');
+    roomsList = await response.json(); //extract JSON from the http response
+    roomsList.map(room => upsertRoom(room));
 }
