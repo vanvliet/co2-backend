@@ -14,7 +14,7 @@ class RoomController {
 
     @GetMapping("")
     fun getAllRoom(): ResponseEntity<Any> {
-        return ResponseEntity.ok().body(Rooms.rooms)
+        return ResponseEntity.ok().body(Rooms.rooms.filter { it.name != null })
     }
 
     @GetMapping("/{name}")
@@ -39,7 +39,7 @@ class RoomController {
 
     @PostMapping("")
     fun createNewRoom(@Valid @RequestBody room: Room): ResponseEntity<Any> {
-        if ( Rooms.rooms.find {it.name == room.name  } == null)
+        if ( Rooms.rooms.find {it.name.isNullOrBlank() && it.name == room.name  } == null)
             return ResponseEntity.ok().body(Rooms.rooms.add(room))
         else
             return ResponseEntity.badRequest().body("Room ${room.name} already exists.")

@@ -7,5 +7,7 @@ import java.time.Instant
 data class Message(
     val timeStamp: Long = Instant.now().toEpochMilli(),
     val name: String,
-    val condition: Condition? = null
+    val condition: Condition? = null,
+    val isRoom: Boolean
+
 )
