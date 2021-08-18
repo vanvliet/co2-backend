@@ -19,7 +19,6 @@
         }
 
         #sidebar-arrow {
-            margin-top: 30px;
             font-size: 1.5em;
         }
     </style>
@@ -45,19 +44,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item" id="sensor-list-accordion">
                     <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        <button id="sensor-list-button" class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Sensoren
+                            Toe te wijzen sensoren
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                          data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <ul id="sensorsList" class="list-group"></ul>
+                            <form class="form-inline">
+                                <input class="form-control" id="inputPassword2" placeholder="Kamer naam">
+                            </form>
                         </div>
-
                     </div>
                 </div>
             </div>

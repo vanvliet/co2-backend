@@ -1,4 +1,4 @@
-package nl.trivento.co2backend.generator
+package nl.trivento.co2backend.data
 
 import nl.trivento.co2backend.domain.Condition
 import nl.trivento.co2backend.domain.Room

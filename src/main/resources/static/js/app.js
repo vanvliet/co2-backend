@@ -1,7 +1,7 @@
 let stompClient = null;
 
-let roomsList = null;
-let sensorList = null;
+$slb = $("#sensor-list-accordion")
+
 
 const connect = () => {
     const socket = new SockJS('/api/v1/ws/room-conditions');
@@ -28,14 +28,20 @@ const upsertRoom = (room) => {
 }
 
 const fetchSensors = async () => {
+    let list = document.getElementById('sensorsList');
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }
     const response = await fetch(window.location.origin + '/api/v1/sensors');
     sensorsList = await response.json();
     sensorsList.map(sensor => upsertSensor(sensor));
+    $("#sensorsList li").size() === 0 ?  $slb.hide() : $slb.show()
 }
 
 const upsertSensor = (sensor) => {
     const li = document.getElementById(sensor.name) ? document.getElementById(sensor.name) : createListItem("sensorsList", sensor.name)
     li.innerHTML = sensor.name
+    $("#sensorsList li").size() === 0 ?  $slb.hide() : $slb.show()
 }
 
 const createListItem = (elementId, id) => {

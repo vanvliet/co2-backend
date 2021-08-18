@@ -1,6 +1,6 @@
 package nl.trivento.co2backend.controllers
 
-import nl.trivento.co2backend.generator.Rooms
+import nl.trivento.co2backend.data.Rooms
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
