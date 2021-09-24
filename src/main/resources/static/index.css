@@ -1,0 +1,83 @@
+.grey {
+    background-color: #D3D3D360;
+    color: darkgrey
+}
+
+.ligthgreen {
+    background-color: #4ABDAC30;
+}
+
+.green {
+    background-color: #4ABDAC60;
+}
+
+.orange {
+    background-color: #FF730080;
+    color: #904600FF
+}
+
+.red {
+    background-color: #FF000080;
+    color: #800001
+}
+
+.sideBarHide {
+    display: none;
+}
+
+.sideBarShow {
+    display: block;
+}
+
+#sidebar-arrow {
+    margin: 15px;
+}
+
+#container-main {
+    width: 100%;
+}
+
+#sidebar-arrow {
+    font-size: 1.5em;
+}
+
+#sidebar {
+    height: 100vh;
+    padding-right: 1px;
+    background-color: #eeeeee;
+}
+#kamer {
+    height: 100vh;
+}
+
+#kamerNaam {
+    color: grey;
+    text-align: center;
+    font-size: 10vh;
+    font-family: Verdana, sans-serif;
+}
+
+#kamerCO2 {
+    color: black;
+    text-align: center;
+    font-size: 30vh;
+    font-family: Verdana, sans-serif;
+}
+.kamerCO2 {
+    height: 35vh;
+    margin: 2vw;
+}
+.kamer {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+.kamerRest {
+    color: grey;
+    text-align: center;
+    font-size: 10vh;
+    font-family: Verdana, sans-serif;
+}
+body {
+    font-family: Verdana, sans-serif;
+}

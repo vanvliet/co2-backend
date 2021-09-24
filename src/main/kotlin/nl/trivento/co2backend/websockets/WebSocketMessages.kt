@@ -14,11 +14,11 @@ class WebSocketMessages(
     lateinit var senML: SenML
 
     fun sendSenmlMessage(pack: String) {
-        val message =  senML.toMessage(pack)
+        val message = senML.toMessage(pack)
         if (message != null)
-        simpMessagingTemplate.convertAndSend(
-            "/topic/room-message",
-            message
-        )
+            simpMessagingTemplate.convertAndSend(
+                "/topic/room-message",
+                message
+            )
     }
 }

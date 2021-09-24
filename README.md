@@ -6,19 +6,27 @@ mvn spring-boot:run
 ```
 or to start the docker
 ```
-docker run -d -p 8080:8080 --name co2-backend rimvanvliet/co2-backend
+docker run -d -p 4200:4200 --name co2-backend rimvanvliet/co2-backend
 ```
 
 ## Access the API
 
-The API is exposed as swagger-ui on <http://localhost:8080/api/v1/swagger-ui.html>
+The API is exposed as swagger-ui on <http://localhost:4200//swagger-ui.html>
 
 Example SenML message that can be POSTed
 ```json
  [{
-      "bn": "00:11:22:33:44:55",
-      "bt": 1.619962716E9
-   }, {
+      "bn": "00:11:22:33:44:55"
+  }, {
+    "n": "temperature",
+    "u": "Cel",
+    "v": 20.5
+  },  {
+    "n": "humidity",
+    "u": "%RH",
+    "v": 64.0
+
+  }, {
       "n": "CO2Concentration",
       "u": "ppm",
       "v": 665.0
@@ -37,7 +45,7 @@ Example room that can be POSTed
 If `bt` (base time) is not passed, the current time is assumed. 
 
 ## Show the results
-Connect with <http://localhost:8080/api/v1>, when a SenML message is sent to the SenML end point, the message is shown:
+Connect with <http://localhost:4200/>, when a SenML message is sent to the SenML end point, the message is shown:
 ```json
 {
   "timeStamp": 1619962716000,

@@ -16,6 +16,6 @@ WORKDIR $HOME
 
 COPY $JAR_FILE $APP_HOME/app.jar
 
-EXPOSE 8080
+EXPOSE 4200
 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar", "app/app.jar"]

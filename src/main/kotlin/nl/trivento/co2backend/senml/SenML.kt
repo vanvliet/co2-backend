@@ -23,7 +23,11 @@ class SenML {
 
         val measurementCollection = normalizedSenMLs.toMeasurementCollection()
         val timeStamp = if (normalizedSenMLs.isNotEmpty()) normalizedSenMLs[0].t else Instant.now()
-        val condition = Condition(co2 = measurementCollection.getDoubleMeasurement("CO2Concentration")?.value)
+        val condition = Condition(
+            co2 = measurementCollection.getDoubleMeasurement("CO2Concentration")?.value,
+            temperature = measurementCollection.getDoubleMeasurement("temperature")?.value,
+            humidity = measurementCollection.getDoubleMeasurement("humidity")?.value
+        )
 
         val sensorName = normalizedSenMLs[0].n.substringBeforeLast(":")
         val roomOpt = Rooms.rooms.find { it.sensors.contains(sensorName) }
