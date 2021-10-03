@@ -12,6 +12,6 @@ class SensorController {
 
     @GetMapping("")
     fun getAllSensor(): ResponseEntity<Any> {
-        return ResponseEntity.ok().body(Rooms.rooms.filter { it.name == null }.map{ it.toSensor() })
+        return ResponseEntity.ok().body(Rooms.rooms.filter { it.name == null }.flatMap { it.sensors })
     }
 }

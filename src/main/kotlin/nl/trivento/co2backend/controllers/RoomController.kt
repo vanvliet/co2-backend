@@ -3,6 +3,7 @@ package nl.trivento.co2backend.controllers
 import nl.trivento.co2backend.domain.Room
 import nl.trivento.co2backend.data.Rooms
 import nl.trivento.co2backend.domain.RoomDtoIn
+import nl.trivento.co2backend.domain.Sensor
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -40,7 +41,7 @@ class RoomController {
 
     @PostMapping("")
     fun createNewRoom(@Valid @RequestBody newRoom: RoomDtoIn): ResponseEntity<Any> {
-        val rooms = Rooms.rooms.filter { it.sensors.contains(newRoom.sensor) }
+        val rooms = Rooms.rooms.filter { it.sensors.contains(Sensor(newRoom.sensor)) }
         if (rooms.size > 1) {
             return ResponseEntity
                 .status(500)
@@ -53,7 +54,7 @@ class RoomController {
                 rooms[0].name = newRoom.name
                 return ResponseEntity.ok().body(rooms[0])
             } else {
-                roomOnName.sensors.add(newRoom.sensor)
+                roomOnName.sensors.add(Sensor(newRoom.sensor))
                 Rooms.rooms.remove(rooms[0])
                 return ResponseEntity.ok().body(roomOnName)
             }

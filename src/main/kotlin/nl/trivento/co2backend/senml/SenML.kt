@@ -4,6 +4,7 @@ import nl.trivento.co2backend.domain.Condition
 import nl.trivento.co2backend.domain.Message
 import nl.trivento.co2backend.domain.Room
 import nl.trivento.co2backend.data.Rooms
+import nl.trivento.co2backend.domain.Sensor
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -30,11 +31,11 @@ class SenML {
         )
 
         val sensorName = normalizedSenMLs[0].n.substringBeforeLast(":")
-        val roomOpt = Rooms.rooms.find { it.sensors.contains(sensorName) }
+        val roomOpt = Rooms.rooms.find { it.sensors.contains(Sensor(sensorName)) }
         val room = if (roomOpt != null) {
             roomOpt
         } else {
-            val newRoom = Room(sensors = mutableListOf(sensorName))
+            val newRoom = Room(sensors = mutableListOf(Sensor(sensorName)))
             Rooms.rooms.add(newRoom)
             logger.info("Sensor $sensorName added to assignable rooms")
             newRoom
