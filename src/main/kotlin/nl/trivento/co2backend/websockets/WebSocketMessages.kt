@@ -13,12 +13,13 @@ class WebSocketMessages(
     @Autowired
     lateinit var senML: SenML
 
-    fun sendSenmlMessage(pack: String) {
+    fun sendSenmlMessage(pack: String): Boolean {
         val message = senML.toMessage(pack)
-        if (message != null)
-            simpMessagingTemplate.convertAndSend(
-                "/topic/room-message",
-                message
-            )
+        if (message != null) {
+            simpMessagingTemplate.convertAndSend("/topic/room-message", message)
+            return true
+        } else {
+            return false
+        }
     }
 }

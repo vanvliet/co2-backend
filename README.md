@@ -25,11 +25,10 @@ Example SenML message that can be POSTed
     "n": "humidity",
     "u": "%RH",
     "v": 64.0
-
   }, {
-      "n": "CO2Concentration",
-      "u": "ppm",
-      "v": 665.0
+    "n": "CO2Concentration",
+    "u": "ppm",
+    "v": 665.0
  }]
 ```
 Example room that can be POSTed

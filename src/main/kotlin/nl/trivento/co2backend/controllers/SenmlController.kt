@@ -21,7 +21,9 @@ class SenmlController {
     @PostMapping("")
     fun sendMessage(@RequestBody pack: String): ResponseEntity<Any> {
         logger.info("Received pack: ${pack.replace("\n", "").replace("\\s+".toRegex(), " ")}")
-        scheduledWebSocketMessages.sendSenmlMessage(pack)
-        return ResponseEntity.accepted().body("SenML pack accepted")
+        if (scheduledWebSocketMessages.sendSenmlMessage(pack))
+            return ResponseEntity.ok().body("SenML pack parsed")
+        else
+            return ResponseEntity.badRequest().body("Invalid SenML")
     }
 }

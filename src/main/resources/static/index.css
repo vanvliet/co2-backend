@@ -42,7 +42,7 @@
 }
 
 #sidebar {
-    height: 100vh;
+    height: 100vmin;
     padding-right: 1px;
     background-color: #eeeeee;
 }
@@ -53,18 +53,18 @@
 #kamerNaam {
     color: grey;
     text-align: center;
-    font-size: 10vh;
+    font-size: 10vmin;
     font-family: Verdana, sans-serif;
 }
 
 #kamerCO2 {
     color: black;
     text-align: center;
-    font-size: 30vh;
+    font-size: 30vmin;
     font-family: Verdana, sans-serif;
 }
 .kamerCO2 {
-    height: 35vh;
+    height: 35vmin;
     margin: 2vw;
 }
 .kamer {
@@ -75,7 +75,7 @@
 .kamerRest {
     color: grey;
     text-align: center;
-    font-size: 10vh;
+    font-size: 10vmin;
     font-family: Verdana, sans-serif;
 }
 body {

@@ -1,17 +1,13 @@
 let stompClient = null;
 let roomsList = null;
 
-$slb = $("#sensor-list-accordion")
-
-
 const connect = () => {
     const socket = new SockJS('/ws/room-conditions');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
+    stompClient.connect({}, function () {
         stompClient.subscribe('/topic/room-message', function (messageOutput) {
             const message = JSON.parse(messageOutput.body)
-            message.isRoom ? upsertRoom(message) : upsertSensor(message);
+            upsertRoom(message);
         });
     });
 }
@@ -25,8 +21,8 @@ const fetchRooms = async () => {
 const getBgColour = (c02Value) => {
     return !c02Value ? "grey" :
         c02Value < 500 ? "ligthgreen" :
-            c02Value < 800 ? "green" :
-                c02Value < 1000 ? "orange" : "red"
+        c02Value < 800 ? "green" :
+        c02Value < 1000 ? "orange" : "red"
 
 }
 
@@ -43,49 +39,17 @@ const upsertRoom = (room) => {
     li.innerHTML = room.name + ": " + conditionCO2
 
     const selectedRoom = document.getElementById("kamerNaam").innerHTML
-    console.log(selectedRoom + ", " + room.name)
     if (selectedRoom === room.name) {
         setRoomValues(room)
     }
 }
 
 const setRoomValues = (room) => {
-    console.log("in setRoomValues: " + room.name)
     document.getElementById("kamerNaam").innerHTML = room.name;
     document.getElementById("kamerCO2").innerHTML = room.condition.co2 ? room.condition.co2 : "-";
     document.getElementById("kamerHumidity").innerHTML = room.condition.humidity ? room.condition.humidity : "-";
     document.getElementById("kamerTemp").innerHTML = room.condition.temperature ? room.condition.temperature : "-";
     document.getElementById("kamer").setAttribute("class", `${getBgColour(room.condition.co2)}`);
-}
-
-const fetchSensors = async () => {
-    let list = document.getElementById('sensorsList');
-    while (list.firstChild) {
-        list.removeChild(list.firstChild);
-    }
-    const response = await fetch(window.location.origin + '//sensors');
-    sensorsList = await response.json();
-    sensorsList.map(sensor => upsertSensor(sensor));
-    $("#sensorsList li").size() === 0 ? $slb.hide() : $slb.show()
-
-}
-
-const upsertSensor = (sensor) => {
-    const li = document.getElementById(sensor.name) ? document.getElementById(sensor.name) : createListItem("sensorsList", sensor)
-    const sensorName = document.createElement('p')
-    sensorName.innerHTML = sensor.name
-    const sensorForm = document.createElement('form')
-    sensorForm.setAttribute("class", "form-inline")
-    sensorForm.setAttribute('id', "sensor-form-" + sensor.name)
-    const sensorInput = document.createElement('input')
-    sensorInput.setAttribute("class", 'form-control')
-    sensorInput.setAttribute('id', "sensor-input-" + sensor.name)
-    sensorInput.setAttribute('placeholder', "Kamer naam")
-    sensorForm.appendChild(sensorInput)
-    li.appendChild(sensorName)
-    // $("#"+sensor-form-"+sensor.name").hide()
-    li.appendChild(sensorForm)
-    $slb.show()
 }
 
 const createListItem = (elementId, item) => {
@@ -95,9 +59,7 @@ const createListItem = (elementId, item) => {
     li.setAttribute("class", "list-group-item");
     roomsListUl.appendChild(li);
     li.addEventListener("click", function (e) {
-        const clicked = document.getElementById(e.target.id);
         const roomIndex = roomsList.findIndex(r => r.name === e.target.id)
-        console.log(roomIndex)
         if (roomIndex !== -1) {
             setRoomValues(roomsList[roomIndex]);
         }
