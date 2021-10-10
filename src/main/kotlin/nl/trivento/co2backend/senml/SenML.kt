@@ -26,7 +26,8 @@ class SenML {
         val condition = Condition(
             co2 = measurementCollection.getDoubleMeasurement("CO2Concentration")?.value,
             temperature = measurementCollection.getDoubleMeasurement("temperature")?.value,
-            humidity = measurementCollection.getDoubleMeasurement("humidity")?.value
+            humidity = measurementCollection.getDoubleMeasurement("humidity")?.value,
+            lastUpdate = timeStamp
         )
 
         val sensorName = normalizedSenMLs[0].n.substringBeforeLast(":")
@@ -38,7 +39,6 @@ class SenML {
         room.condition = condition
 
         return Message(
-            timeStamp = timeStamp.toEpochMilli(),
             name = room.name,
             condition = condition,
         )

@@ -78,6 +78,13 @@
     font-size: 10vmin;
     font-family: Verdana, sans-serif;
 }
+.kamerUpdate {
+    color: gray;
+    text-align: right;
+    font-size: 4vmin;
+    font-family: Verdana, sans-serif;
+    margin-right: 5vmin;
+}
 body {
     font-family: Verdana, sans-serif;
 }

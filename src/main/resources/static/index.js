@@ -1,5 +1,6 @@
-let stompClient = null;
-let roomsList = null;
+var stompClient = null;
+var roomsList = null;
+var intervalId = null;
 
 const connect = () => {
     const socket = new SockJS('/ws/room-conditions');
@@ -50,6 +51,18 @@ const setRoomValues = (room) => {
     document.getElementById("kamerHumidity").innerHTML = room.condition.humidity ? room.condition.humidity : "-";
     document.getElementById("kamerTemp").innerHTML = room.condition.temperature ? room.condition.temperature : "-";
     document.getElementById("kamer").setAttribute("class", `${getBgColour(room.condition.co2)}`);
+    updateTicker(room);
+    if (intervalId) {
+        clearInterval(intervalId)
+    }
+    intervalId = setInterval(updateTicker, 1000, room);
+}
+
+const updateTicker = (room) => {
+    let lastUpdate = new Date(room.condition.lastUpdate)
+    let now = new Date
+    let sinceLastUpdate = Math.round((now.getTime() - lastUpdate.getTime()) / 1000)
+    document.getElementById("lastUpdate").innerHTML = sinceLastUpdate < 3600 ? sinceLastUpdate + 's' : '> 1h ago';
 }
 
 const createListItem = (elementId, item) => {

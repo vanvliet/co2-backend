@@ -81,14 +81,14 @@ class RoomController {
     }
 
     @PatchMapping("/{roomName}")
-    fun moveRoomSensor(@PathVariable(value = "roomName") fromRoomName: String,
-                       @Valid @RequestBody moveRoomSensor: MoveRoomSensor): ResponseEntity<Any> {
+    fun moveSensor(@PathVariable(value = "roomName") fromRoomName: String,
+                   @Valid @RequestBody moveSensor: MoveSensor): ResponseEntity<Any> {
         val roomFromName = Rooms.rooms.find { it.name == fromRoomName }
-        val roomToName = Rooms.rooms.find { it.name == moveRoomSensor.toRoomName }
+        val roomToName = Rooms.rooms.find { it.name == moveSensor.toRoomName }
         return if (roomFromName == null ) {
             ResponseEntity.status(404).body("Room $fromRoomName not found.")
         } else if (roomToName == null ) {
-            ResponseEntity.status(404).body("Room ${moveRoomSensor.toRoomName} not found.")
+            ResponseEntity.status(404).body("Room ${moveSensor.toRoomName} not found.")
         } else {
             roomToName.sensor = roomFromName.sensor
             Rooms.rooms.remove(roomFromName)
@@ -99,5 +99,5 @@ class RoomController {
 
 data class UpdateRoomName(val newRoomName: String)
 data class UpdateRoomSensor(val newSensorName: String)
-data class MoveRoomSensor(val toRoomName: String)
+data class MoveSensor(val toRoomName: String)
 
