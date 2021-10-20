@@ -12,6 +12,6 @@ object Rooms {
         Room( name =  "Kamer 4.02", sensor = Sensor( "kamer42")),
         Room( name =  "Kubus 5", sensor = Sensor( "kubus5")),
         Room( name =  "Kamer 5.01", sensor = Sensor( "kamer51")),
-        Room( name =  "Kamer 5.02", sensor = Sensor( "29b28c"))
+        Room( name =  "Kamer 5.02", sensor = Sensor( "kamer52"))
     )}
 

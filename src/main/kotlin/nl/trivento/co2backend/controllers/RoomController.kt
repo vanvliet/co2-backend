@@ -51,13 +51,15 @@ class RoomController {
     }
 
     @PatchMapping("/{roomName}/name")
-    fun updateRoomName(@PathVariable(value = "roomName") oldRoomName: String,
-                       @Valid @RequestBody updateRoomName: UpdateRoomName): ResponseEntity<Any> {
+    fun updateRoomName(
+        @PathVariable(value = "roomName") oldRoomName: String,
+        @Valid @RequestBody updateRoomName: UpdateRoomName
+    ): ResponseEntity<Any> {
         val roomWithOldRoomName = Rooms.rooms.find { it.name == oldRoomName }
         val roomWithNewRoomName = Rooms.rooms.find { it.name == updateRoomName.newRoomName }
-        return if (roomWithNewRoomName != null ) {
+        return if (roomWithNewRoomName != null) {
             ResponseEntity.status(400).body("Room $updateRoomName already exists.")
-        } else if (roomWithOldRoomName == null ) {
+        } else if (roomWithOldRoomName == null) {
             ResponseEntity.status(404).body("Room $oldRoomName not found.")
         } else {
             roomWithOldRoomName.name = updateRoomName.newRoomName
@@ -66,14 +68,17 @@ class RoomController {
     }
 
     @PatchMapping("/{roomName}/sensor")
-    fun updateRoomSensor(@PathVariable(value = "roomName") roomName: String,
-                        @Valid @RequestBody updateRoomSensor: UpdateRoomSensor): ResponseEntity<Any> {
+    fun updateRoomSensor(
+        @PathVariable(value = "roomName") roomName: String,
+        @Valid @RequestBody updateRoomSensor: UpdateRoomSensor
+    ): ResponseEntity<Any> {
         val roomWithName = Rooms.rooms.find { it.name == roomName }
         val roomWithSensor = Rooms.rooms.find { it.sensor == Sensor(updateRoomSensor.newSensorName) }
-        return if (roomWithName == null ) {
+        return if (roomWithName == null) {
             ResponseEntity.status(404).body("Room $roomName not found.")
-        } else if (roomWithSensor != null ) {
-            ResponseEntity.status(400).body("Sensor ${updateRoomSensor.newSensorName} already exists in room ${roomWithSensor.name}.")
+        } else if (roomWithSensor != null) {
+            ResponseEntity.status(400)
+                .body("Sensor ${updateRoomSensor.newSensorName} already exists in room ${roomWithSensor.name}.")
         } else {
             roomWithName.sensor = Sensor(updateRoomSensor.newSensorName)
             ResponseEntity.ok().body(roomWithName)
@@ -81,13 +86,15 @@ class RoomController {
     }
 
     @PatchMapping("/{roomName}")
-    fun moveSensor(@PathVariable(value = "roomName") fromRoomName: String,
-                   @Valid @RequestBody moveSensor: MoveSensor): ResponseEntity<Any> {
+    fun moveSensor(
+        @PathVariable(value = "roomName") fromRoomName: String,
+        @Valid @RequestBody moveSensor: MoveSensor
+    ): ResponseEntity<Any> {
         val roomFromName = Rooms.rooms.find { it.name == fromRoomName }
         val roomToName = Rooms.rooms.find { it.name == moveSensor.toRoomName }
-        return if (roomFromName == null ) {
+        return if (roomFromName == null) {
             ResponseEntity.status(404).body("Room $fromRoomName not found.")
-        } else if (roomToName == null ) {
+        } else if (roomToName == null) {
             ResponseEntity.status(404).body("Room ${moveSensor.toRoomName} not found.")
         } else {
             roomToName.sensor = roomFromName.sensor
@@ -95,9 +102,9 @@ class RoomController {
             ResponseEntity.ok().body(roomToName)
         }
     }
-}
 
-data class UpdateRoomName(val newRoomName: String)
-data class UpdateRoomSensor(val newSensorName: String)
-data class MoveSensor(val toRoomName: String)
+    data class UpdateRoomName(val newRoomName: String)
+    data class UpdateRoomSensor(val newSensorName: String)
+    data class MoveSensor(val toRoomName: String)
+}
 

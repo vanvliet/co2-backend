@@ -55,14 +55,20 @@ const setRoomValues = (room) => {
     if (intervalId) {
         clearInterval(intervalId)
     }
-    intervalId = setInterval(updateTicker, 1000, room);
+    if (isValidDate(new Date(room.condition.lastUpdate))) intervalId = setInterval(updateTicker, 1000, room);
+}
+
+function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
 }
 
 const updateTicker = (room) => {
     let lastUpdate = new Date(room.condition.lastUpdate)
     let now = new Date
     let sinceLastUpdate = Math.round((now.getTime() - lastUpdate.getTime()) / 1000)
-    document.getElementById("lastUpdate").innerHTML = sinceLastUpdate < 3600 ? sinceLastUpdate + 's' : '> 1h ago';
+    document.getElementById("lastUpdate").innerHTML =
+        ! isValidDate(lastUpdate) ? 'nog geen informatie onvangen' :
+        sinceLastUpdate < 3600 ? sinceLastUpdate + 's' : '> 1h ago';
 }
 
 const createListItem = (elementId, item) => {
